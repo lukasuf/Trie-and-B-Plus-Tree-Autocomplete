@@ -19,7 +19,7 @@ The goal of this project is to implement an autocomplete algorithm using a large
 TBD
 
 ## Dataset
-<p> Our data will be derived from a text file of English words from this GitHub repository: <br>
+<p> Our data will be derived from the A-Z text files of English words from this GitHub repository: <br>
 https://github.com/kloge/The-English-Open-Word-List/tree/master/EOWL%20LF%20Delimited%20Format
 
 ## Trie Complexity
