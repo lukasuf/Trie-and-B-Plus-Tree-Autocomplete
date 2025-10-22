@@ -10,6 +10,7 @@ Link to Original Project 2 Template: https://github.com/COP3530/P2-template/blob
     - Implementation Complexity
     	- [Trie Tree](#trie-complexity)
      	- [B+ Tree](#b-tree-complexity)
+	- [Testing Instructions](#testing-instructions)
     - [References](#references) 
 
 # Goals, Problem, & Motivation
@@ -26,6 +27,9 @@ https://github.com/kloge/The-English-Open-Word-List/tree/master/EOWL%20LF%20Deli
 TBD
 
 ## B+ Tree Complexity
+TBD
+
+## Testing Instructions
 TBD
 
 ## References
