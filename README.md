@@ -20,7 +20,7 @@ TBD
 
 ## Dataset
 <p> Our data will be derived from a text file of English words from this GitHub repository: <br>
-https://github.com/david47k/top-english-wordlists/raw/master/top_english_words_lower_1000000.txt
+https://github.com/kloge/The-English-Open-Word-List/tree/master/EOWL%20LF%20Delimited%20Format
 
 ## Trie Complexity
 TBD
