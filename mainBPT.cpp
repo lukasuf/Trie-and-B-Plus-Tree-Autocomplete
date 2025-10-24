@@ -6,7 +6,6 @@
 #include <regex>
 #include "BPT.h"
 
-
 int main()
 {
     std::vector<std::string> words;
@@ -75,6 +74,56 @@ int main()
     // std::cout << "B+ Tree structure:" << std::endl;
     // myBPT.printBPT();
 
+    //"Prefix" Entry
+    std::cout << "Enter a (partial) lower-case word: ";
+    std::string prefix;
+    std::cin >> prefix;
+    std::cout << std::endl;
+
+    //Find Auto Complete Options
+    std::queue<std::string> acOptions = myBPT.findAutoCompleteOptions(prefix);
+
+    // //Print All Options
+    // std::cout << std::endl << "Auto-Complete Options Matching: '" << prefix << "':" << std::endl;
+    // while (acOptions.empty() == false)
+    // {
+    //     std::cout << acOptions.front() << std::endl;
+    //     acOptions.pop();
+    // }
+
+    std::string option = "";
+    std::string entry = "";
+
+    //AutoComplete Option Cycling / Interface
+    while ((acOptions.empty() == false) && (option != "e"))
+    {
+        entry = acOptions.front();
+
+        std::cout << "Current Autocomplete Option: " << entry << std::endl << std::endl;
+
+        std::cout << "Enter (e) to lock in the word or (t) to cycle to next word: ";
+        std::cin >> option;
+
+        if (option == "e")
+        {
+            std::cout << entry << " entered." << std::endl;
+        }
+        else if (option == "t" && acOptions.size() == 1)
+        {
+            std::cout << "Out of words." << std::endl;
+        }
+        else if (option == "t")
+        {
+
+        }
+        else
+        {
+            std::cout << "Invalid entry. Try again." << std::endl;
+            continue;
+        }
+
+        acOptions.pop();
+    }
+
     return 0;
 }
-
