@@ -1,5 +1,134 @@
 #include "BPT.h"
 
+// Handles Insertions that Cause Splitting
+void BPT::splitNode(Node* originalNode)
+{
+    // Find the mid/split point
+    int midPoint = (order + 1) / 2;
+
+    // Leaf Node Case:
+    if (originalNode->leafNode)
+    {
+        // Create a new leaf node and assign the keys at and after the midpoint of the original to it.
+        Node* newLeafNode = new Node(true);
+        newLeafNode->keys.assign(originalNode->keys.begin() + midPoint, originalNode->keys.end());
+        // Then, efficiently resize the vector, deleting the duplicate keys through truncation.
+        originalNode->keys.resize(midPoint);
+
+        // Set the next pointer for the new leaf node equal to the next pointer of the original node.
+        newLeafNode->next = originalNode->next;
+        // If that next pointer points to an existing node, set its prev to the new leaf node.
+        if (newLeafNode->next != nullptr)
+        {
+            newLeafNode->next->prev = newLeafNode;
+        }
+
+        // Then, set the original node's next pointer to the new leaf node, and the new leaf node's prev to the original.
+        originalNode->next = newLeafNode;
+        newLeafNode->prev = originalNode;
+
+        // Set the parent of the new leaf node to the parent of the original leaf node.
+        newLeafNode->parent = originalNode->parent;
+
+        // If the original node is the root,
+        if (originalNode == root)
+        {
+            // we need to create a new root Node that is not a leaf.
+            Node* newRootNode = new Node(false);
+
+            // Then, push the first key of the new leaf to the new root, and add both to the new root's children vector.
+            newRootNode->keys.push_back(newLeafNode->keys[0]);
+            newRootNode->children.push_back(originalNode);
+            newRootNode->children.push_back(newLeafNode);
+
+            // Next, update the parent pointers of the original and new leaf to point to the new root.
+            originalNode->parent = newRootNode;
+            newLeafNode->parent = newRootNode;
+
+            // Lastly, set the root of the tree to the new root.
+            this->root = newRootNode;
+        }
+        // If the original node isn't the root, we are promoting up into an existing node and need a recursion check.
+        else
+        {
+            insertIntoExisting(originalNode, newLeafNode->keys[0], newLeafNode);
+        }
+    }
+    // Internal Node Case:
+    else
+    {
+        // Create a new internal node and assign the keys and corresponding children that come after the midpoint to it.
+        Node* newInternalNode = new Node(false);
+        newInternalNode->keys.assign(originalNode->keys.begin() + midPoint + 1, originalNode->keys.end());
+        newInternalNode->children.assign(originalNode->children.begin() + midPoint + 1, originalNode->children.end());
+
+        // For each child in the new internal node, update its parent pointer to the new internal node.
+        for (Node*& child : newInternalNode->children)
+        {
+            child->parent = newInternalNode;
+        }
+
+        // Then, efficiently resize the key and children vectors of the original, deleting the duplicates through truncation.
+        originalNode->keys.resize(midPoint);
+        originalNode->children.resize(midPoint + 1);
+
+        // Set the parent pointer of the new internal node to the parent of the original internal node.
+        newInternalNode->parent = originalNode->parent;
+
+        // If the original node is the root,
+        if (originalNode == this->root)
+        {
+            // we need to create a new root node.
+            Node* newRootNode = new Node(false);
+
+            // Then, push the middle key to the new root, and add the original and new internal nodes to the new root's children vector.
+            newRootNode->keys.push_back(originalNode->keys[midPoint]);
+            newRootNode->children.push_back(originalNode);
+            newRootNode->children.push_back(newInternalNode);
+
+            // Next, update the parent pointers of the original and new leaf to point to the new root.
+            originalNode->parent = newRootNode;
+            newInternalNode->parent = newRootNode;
+
+            //Lastly, set the root of the tree to the new root.
+            this->root = newRootNode;
+        }
+        // If the original node is not the root, we are promoting up into a parent and need a recursion check.
+        else
+        {
+            insertIntoExisting(originalNode, originalNode->keys[midPoint], newInternalNode);
+        }
+    }
+}
+
+// Handles Promotions from Splitting that Insert into an Existing Parent Node
+void BPT::insertIntoExisting(Node* originalNode, const std::string& key, Node* newNode)
+{
+    // Get the parent of the original node
+    Node* parentNode = originalNode->parent;
+
+    // Iterate through the keys of the parentNode to find the proper insertion index for the promoted key.
+    int i = 0;
+    while (i < parentNode->keys.size() && key >= parentNode->keys[i])
+    {
+        i++;
+    }
+    // Then, insert it.
+    parentNode->keys.insert(parentNode->keys.begin() + i, key);
+
+    // Add the pointer to the new node to the proper insertion index (1 after the key's) of the parent's children vector.
+    parentNode->children.insert(parentNode->children.begin() + i + 1, newNode);
+    // Then, update the parent pointer of the new node to the parent node.
+    newNode->parent = parentNode;
+
+    // Check if the parent now exceeds max keys after insertion.
+    if (parentNode->keys.size() >= order)
+    {
+        //If so, split it recursively.
+        splitNode(parentNode);
+    }
+}
+
 // B+ Tree Constructor
 BPT::BPT(const size_t& order)
 {
