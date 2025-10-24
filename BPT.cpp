@@ -83,3 +83,54 @@ void BPT::insert(const std::string& key)
         splitNode(currentNode);
     }
 }
+
+// Iterative Level Order Key Print
+void BPT::printBPT()
+{
+    // If empty tree, just return.
+    if (this->root == nullptr)
+    {
+        return;
+    }
+
+    // Declare queue and push root to it.
+    std::queue<Node*> myQ;
+    myQ.push(this->root);
+
+    // While queue is not empty,
+    while (!myQ.empty())
+    {
+        // iterate through each node on a level,
+        int size = myQ.size();
+        for (size_t i = 0; i < size; i++)
+        {
+            // printing each key in a node in-between <>.
+            Node* currentNode = myQ.front();
+            myQ.pop();
+            std::cout << "<";
+            for (size_t j = 0; j < currentNode->keys.size(); j++)
+            {
+                std::cout << currentNode->keys[j];
+
+                // If it is not a last key, add space. <- <app apple> instead of <app apple >
+                if (j != currentNode->keys.size() - 1)
+                {
+                    std::cout << " ";
+                }
+            }
+            std::cout << "> ";
+
+            // If the current node is not a leaf, add its children to the queue
+            if (!currentNode->leafNode)
+            {
+                for (Node* child : currentNode->children)
+                {
+                    myQ.push(child);
+                }
+            }
+        }
+
+        // Put each level on its own line.
+        std::cout << std::endl;
+    }
+}
