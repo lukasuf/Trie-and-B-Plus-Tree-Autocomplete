@@ -30,7 +30,8 @@ TBD
 TBD
 
 ## Testing Instructions
-TBD
+If testing B+ Tree implementation in CLion, keep the .cpp and .h files in the project folder. Then, place the data folder containing all of the "_ Words.txt" files in the cmake-build-debug folder.
+Then,...
 
 ## References
 [In-Progress]
