@@ -52,7 +52,7 @@ int main()
 
 
     //DEBUG: Easier Structure Checking
-    words = {"app", "appl", "ban", "baa", "bana", "basi", "best", "brea", "bat", "boss", "band", "cat", "catr", "dog", "dove"};
+    // words = {"app", "appl", "ban", "baa", "bana", "basi", "best", "brea", "bat", "boss", "band", "cat", "catr", "dog", "dove"};
     //ACCORDING TO VISUALIZER, SHOULD MATCH   <basi>
     //                                        <baa bana> <best brea catr>
     //                                        <app appl> <baa ban> <bana band> <basi bat> <best boss> <brea cat> <catr dog dove>
@@ -62,7 +62,7 @@ int main()
     std::cout << "Words Size: " << words.size() << std::endl << std::endl;
 
     //Initialize n-Order B+ Tree
-    size_t n = 4;
+    size_t n = 220;
     BPT myBPT(n);
 
     //Insert each word into the B+ Tree
@@ -72,8 +72,8 @@ int main()
     }
 
     //DEBUG: Check B+ tree structure
-    std::cout << "B+ Tree structure:" << std::endl;
-    myBPT.printBPT();
+    // std::cout << "B+ Tree structure:" << std::endl;
+    // myBPT.printBPT();
 
     return 0;
 }
