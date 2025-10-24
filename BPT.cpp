@@ -129,6 +129,30 @@ void BPT::insertIntoExisting(Node* originalNode, const std::string& key, Node* n
     }
 }
 
+// Finds the node with key starting with the prefix
+BPT::Node* BPT::findNearestNode(const std::string& prefix)
+{
+    // Start with the root.
+    Node* currentNode = this->root;
+
+    // While the current node is not null nor a leaf,
+    while ((currentNode != nullptr) && (currentNode->leafNode == false))
+    {
+        int i = 0;
+        // iterate through the keys of the current node until the prefix is less than the ith key.
+        while (i < currentNode->keys.size() && prefix >= currentNode->keys[i])
+        {
+            i++;
+        }
+        // This should yield the index of the child that has keys that are either greater than or equal to the prefix.
+        // So, update the current node to the child at that index.
+        currentNode = currentNode->children[i];
+    }
+
+    //If currentNode is nullptr after the while loop, we want to return that. If not, that is good too.
+    return currentNode;
+}
+
 // B+ Tree Constructor
 BPT::BPT(const size_t& order)
 {
@@ -263,3 +287,63 @@ void BPT::printBPT()
         std::cout << std::endl;
     }
 }
+
+//Find and Return Queue of Autocomplete Options
+std::queue<std::string> BPT::findAutoCompleteOptions(const std::string& prefix)
+{
+    Node* nearestNode = findNearestNode(prefix);
+
+    std::queue<std::string> autoCompleteOptions;
+
+    if (nearestNode != nullptr)
+    {
+        Node* currentNode = nearestNode;
+        bool more = true;
+        while (more)
+        {
+            // Start at the first element in the keys vector of the currentNode
+            auto iter = currentNode->keys.begin();
+            size_t i = 0;
+            // While there are still more keys and the current key is less than the prefix,
+            while ((iter != currentNode->keys.end()) && (*iter < prefix))
+            {
+                // increment the iterator and index.
+                iter++;
+                i++;
+            }
+
+            // Print all matching keys in current node
+            while (i < currentNode->keys.size())
+            {
+                // Start with the first key at index i
+                const std::string& key = currentNode->keys[i];
+                // If prefix is in the current key,
+                if (key.compare(0, prefix.size(), prefix) == 0)
+                {
+                    // Add it to options vector
+                    autoCompleteOptions.push(key);
+                }
+                // Otherwise, we are out of keys.
+                else
+                {
+                    // So, there are NOT more, and we should break.
+                    more = false;
+                    break;
+                }
+                i++;
+            }
+            if (more && currentNode->next != nullptr)
+            {
+                currentNode = currentNode->next;
+            }
+        }
+    }
+    else
+    {
+        std::cout << "No matching strings found." << std::endl;
+        return {};
+    }
+
+    return autoCompleteOptions;
+}
+
