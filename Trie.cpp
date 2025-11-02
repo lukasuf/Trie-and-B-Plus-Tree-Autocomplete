@@ -98,8 +98,7 @@ void Trie::collectWords(Node* currentNode, const std::string& prefix, std::vecto
 }
 
 // finds and returns a queue of autocomplete options sorted alphabetically
-std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix)
-{
+std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix) {
     const Node* currentNode = this->root;
 
     // traverse the trie to reach the node corresponding to the prefix
@@ -108,7 +107,7 @@ std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix)
         auto it = currentNode->children.find(c);
         if (it == currentNode->children.end())
         {
-            // return an empty queue if no matching prefix exists
+            std::cout << "Not a real word with no ending." << std::endl;
             return {};
         }
         currentNode = it->second;
@@ -118,12 +117,33 @@ std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix)
     std::vector<std::string> words;
     collectWords(const_cast<Node*>(currentNode), prefix, words);
 
+    // remove the prefix itself from results
+    if (!words.empty() && words.front() == prefix)
+    {
+        words.erase(words.begin());
+    }
+
+    // now decide which message to show if nothing remains
+    if (words.empty())
+    {
+        if (currentNode->isEndOfWord)
+        {
+            // the prefix is a real word but has no longer completions
+            std::cout << "No possible endings." << std::endl;
+        }
+        else
+        {
+            // the prefix path exists but isn’t a full word and has no children
+            std::cout << "Word not found, no possible endings" << std::endl;
+        }
+        return {};
+    }
+
     // move results into a standard queue for easier cycling in main
     std::queue<std::string> autoCompleteOptions;
     for (const std::string& word : words)
     {
         autoCompleteOptions.push(word);
     }
-
     return autoCompleteOptions;
 }

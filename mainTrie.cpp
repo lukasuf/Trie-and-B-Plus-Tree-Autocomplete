@@ -73,7 +73,6 @@ int main()
     std::cout << "Enter a (partial) lower-case word: ";
     std::string prefix;
     std::cin >> prefix;
-    std::cout << std::endl;
 
     // find autocomplete options for the prefix
     std::queue<std::string> acOptions = myTrie.findAutoCompleteOptions(prefix);
@@ -115,12 +114,5 @@ int main()
         // remove the displayed option from the queue
         acOptions.pop();
     }
-
-    // if no suggestions were found
-    if (acOptions.empty() && option != "e")
-    {
-        std::cout << "No matching strings found." << std::endl;
-    }
-
     return 0;
 }
