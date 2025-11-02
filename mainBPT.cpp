@@ -78,10 +78,30 @@ int main()
     std::cout << "Enter a (partial) lower-case word: ";
     std::string prefix;
     std::cin >> prefix;
-    std::cout << std::endl;
+
+    // check if prefix is a full word
+    bool prefixExists = false;
+    for (const std::string& w : words)
+    {
+        if (w == prefix)
+        {
+            prefixExists = true;
+            break;
+        }
+    }
 
     //Find Auto Complete Options
     std::queue<std::string> acOptions = myBPT.findAutoCompleteOptions(prefix);
+
+    // handle cases where the prefix produced no matches
+    if (acOptions.empty()) {
+        if (prefixExists) {
+            std::cout << "\nNo possible endings.\n";
+        } else {
+            std::cout << "\nNot a real word with no endings.\n";
+        }
+        return 0;
+    }
 
     // //Print All Options
     // std::cout << std::endl << "Auto-Complete Options Matching: '" << prefix << "':" << std::endl;

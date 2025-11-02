@@ -107,7 +107,6 @@ std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix)
         auto it = currentNode->children.find(c);
         if (it == currentNode->children.end())
         {
-            std::cout << "Not a real word with no ending." << std::endl;
             return {};
         }
         currentNode = it->second;
@@ -123,19 +122,8 @@ std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix)
         words.erase(words.begin());
     }
 
-    // now decide which message to show if nothing remains
     if (words.empty())
     {
-        if (currentNode->isEndOfWord)
-        {
-            // the prefix is a real word but has no longer completions
-            std::cout << "No possible endings." << std::endl;
-        }
-        else
-        {
-            // the prefix path exists but isn’t a full word and has no children
-            std::cout << "Word not found, no possible endings" << std::endl;
-        }
         return {};
     }
 

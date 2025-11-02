@@ -293,6 +293,11 @@ std::queue<std::string> BPT::findAutoCompleteOptions(const std::string& prefix)
 {
     Node* nearestNode = findNearestNode(prefix);
 
+    if (nearestNode == nullptr || nearestNode->keys.empty()) {
+        // no matching node or keys at all
+        return {};
+    }
+
     std::queue<std::string> autoCompleteOptions;
 
     if (nearestNode != nullptr)
@@ -311,22 +316,36 @@ std::queue<std::string> BPT::findAutoCompleteOptions(const std::string& prefix)
                 iter++;
                 i++;
             }
-
+            // if this leaf has no keys >= prefix, decide whether to move or stop
+            if (i >= currentNode->keys.size()) {
+                if (currentNode->next == nullptr) {
+                    // we're at the last leaf and still no keys >= prefix => no matches
+                    break;  // exit the while(more) loop
+                } else {
+                    currentNode = currentNode->next;  // try the next leaf
+                    continue;                         // restart with the next leaf
+                }
+            }
             // Print all matching keys in current node
+            bool foundMatch = false;
             while (i < currentNode->keys.size())
             {
-                // Start with the first key at index i
                 const std::string& key = currentNode->keys[i];
-                // If prefix is in the current key,
-                if (key.compare(0, prefix.size(), prefix) == 0)
+                if (key.rfind(prefix, 0) == 0)  // true prefix match
                 {
-                    // Add it to options vector
-                    autoCompleteOptions.push(key);
+                    if (key != prefix)  // skip the prefix itself as a completion
+                    {
+                        autoCompleteOptions.push(key);
+                    }
+                    foundMatch = true;
                 }
-                // Otherwise, we are out of keys.
-                else
+                else if (foundMatch)
                 {
-                    // So, there are NOT more, and we should break.
+                    more = false;
+                    break;
+                }
+                else if (key > prefix)
+                {
                     more = false;
                     break;
                 }
@@ -340,7 +359,6 @@ std::queue<std::string> BPT::findAutoCompleteOptions(const std::string& prefix)
     }
     else
     {
-        std::cout << "No matching strings found." << std::endl;
         return {};
     }
 

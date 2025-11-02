@@ -5,17 +5,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # B+ Tree main executable
-add_executable(autocomplete
+add_executable(bpt_demo
         mainBPT.cpp
         BPT.cpp
-        Trie.cpp
 )
 
 # Copy the data folder after building so the program can read text files
-add_custom_command(TARGET autocomplete POST_BUILD
+add_custom_command(TARGET bpt_demo POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/data
-        $<TARGET_FILE_DIR:autocomplete>/data)
+        $<TARGET_FILE_DIR:bpt_demo>/data)
 
 # Trie demo (for independent testing)
 add_executable(trie_demo

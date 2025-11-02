@@ -73,9 +73,22 @@ int main()
     std::cout << "Enter a (partial) lower-case word: ";
     std::string prefix;
     std::cin >> prefix;
+    bool prefixExists = myTrie.contains(prefix);
 
     // find autocomplete options for the prefix
     std::queue<std::string> acOptions = myTrie.findAutoCompleteOptions(prefix);
+
+    // case 1: prefix not found at all
+    if (acOptions.empty() && !prefixExists) {
+        std::cout << "\nNot a real word with no endings.\n";
+        return 0;
+    }
+
+    // case 2: prefix is a valid word but has no longer completions
+    if (acOptions.empty() && prefixExists) {
+        std::cout << "\nNo possible endings.\n";
+        return 0;
+    }
 
     // variables for cycling options
     std::string option = "";
