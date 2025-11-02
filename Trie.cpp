@@ -108,7 +108,7 @@ std::queue<std::string> Trie::findAutoCompleteOptions(const std::string& prefix)
         auto it = currentNode->children.find(c);
         if (it == currentNode->children.end())
         {
-            std::cout << "No matching strings found." << std::endl;
+            // return an empty queue if no matching prefix exists
             return {};
         }
         currentNode = it->second;
