@@ -167,7 +167,7 @@ BPT::BPT(const size_t& order)
 // Once finished, set root to nullptr.
 BPT::~BPT()
 {
-    if (this->root != nullptr)
+    if (this->root == nullptr)
     {
         return;
     }
