@@ -35,10 +35,10 @@ Then,...
 
 ## References
 BPT References (Used in the research and understanding of B+ Trees)
-    1. Edugator "9.6 B/B+ Trees" Lesson [https://edugator.app/courses/2eff7d57-3f4b-4297-ac6c-0bb5ce67348b/lesson/d54ad28e-5b7f-4cbd-91ae-87172912aa79]
-    2. Open-DSA "17.6 B Trees" [https://opendsa-server.cs.vt.edu/OpenDSA/Books/Everything/html/BTree.html#id2]
-    3. Weiss "4.7 B-Trees" [Page 168 of Data Structures and Algorithm Analysis in C++, 4th Edition]
-    4. Lecture Slides "4 - Balanced Trees" [Slide 190/214]
-        4.1. Wikipedia [https://en.wikipedia.org/wiki/B%2B_tree]
-    5. B+ Tree Visualizer [https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html]
+<p>     1. [Edugator "9.6 B/B+ Trees" Lesson](https://edugator.app/courses/2eff7d57-3f4b-4297-ac6c-0bb5ce67348b/lesson/d54ad28e-5b7f-4cbd-91ae-87172912aa79) <br>
+<p>     2. [Open-DSA "17.6 B Trees"](https://opendsa-server.cs.vt.edu/OpenDSA/Books/Everything/html/BTree.html#id2) <br>
+<p>     3. Weiss "4.7 B-Trees" [Page 168 of Data Structures and Algorithm Analysis in C++, 4th Edition] <br>
+<p>     4. Lecture Slides "4 - Balanced Trees" [Slide 190/214] <br>
+<p>     	4.1. [B-Tree Wikipedia](https://en.wikipedia.org/wiki/B%2B_tree) <br>
+<p>     5. [B+ Tree Visualizer](https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html) <br>
 
