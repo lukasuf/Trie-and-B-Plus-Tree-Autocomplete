@@ -16,6 +16,7 @@ Link to Original Project 2 Template: https://github.com/COP3530/P2-template/blob
 By implementing an autocomplete algorithm, we aim to improve typing efficiency and reduce typos, thereby reducing problematic incidents of miscommunication and lost productivity. 
 By using a large data set of English words and two different data structures, Tries and B+ trees, we will create a command-line interface where partial word entries can be autocompleted to the whole word nearest to a typed entry and further word option selection. For example, if you enter “redu”, the nearest option would be “reduce” instead of “reduced” or “reducer” because ‘d’ is earlier in the alphabet compared to ‘r’.
 Then, you can either select type ‘t’ (for tab) to cycle to the next nearest option through if it exists or type ‘e’ (for enter) to lock in the current option.
+NOTE: Entering "reduce" will not find "reduce", it will skip "reduce" and go to "reduced", as the program assumes you are not trying to autocomplete an already complete word.
 
 To implement the data structures and command-line interface, we will use the CLion IDE, the C++ programming language, and some C++ standard libraries, including the iostream, vector, string, map, queue, stack, regex, fstream, sstream, and chrono libraries. Then, once implemented, we aim to calculate and compare the asymptotic complexities of each implementation, allowing us to ascertain which implementation is more efficient.
 
