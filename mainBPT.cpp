@@ -75,7 +75,7 @@ int main()
     // myBPT.printBPT();
 
     //"Prefix" Entry
-    std::cout << "Enter a (partial) lower-case word: ";
+    std::cout << "Enter a lower-case prefix query: ";
     std::string prefix;
     std::cin >> prefix;
 
