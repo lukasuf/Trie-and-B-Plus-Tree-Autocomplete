@@ -9,6 +9,7 @@ Link to Original Project 2 Template: https://github.com/COP3530/P2-template/blob
     - Implementation Complexity
     	- [Trie Tree](#trie-complexity)
      	- [B+ Tree](#b-tree-complexity)
+      	- [Comparison](#complexity-comparison) 
 	- [Testing Instructions](#testing-instructions)
     - [References](#references) 
 
