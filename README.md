@@ -60,7 +60,7 @@ This means that for large-scale data loading or frequent insertions, the Trie is
 To run this project, open CLion. Click File at the top, then click Open. Find the folder where you saved or downloaded this project and open it. Make sure to trust the project so that the IDE works, and ensure that the following files are inside: BPT.cpp, BPT.h, Trie.cpp, Trie.h, mainTrie.cpp, mainBPT.cpp, mainCombined.cpp, CMakeList.txt, and the folder called data that holds all the word files from A to Z. Once the project is open, look at the top right of CLion for a box that says trie_demo, bpt_demo, or combined_demo. Pick which one you want to run, then click the green Run or Build button. The program will load all the words and ask you to type a partial word. Note: If you type in "star" in hopes of adding "star", it will treat "star" as a prefix and ignore it, jumping directly to "starboard". Press 't' to cycle through more word suggestions (if they exist) or press 'e' to lock the current one in. If you run the combined version, you can also add words manually by pressing 's' and entering the desired entry. Moreover, in combined mode, you can save words to a text file and compare how fast the Trie and B+ Tree implementations perform initial building and average query functions. When finished, type 0 to exit the program. Also, note that the text file containing any saved words will be in the cmake-build-debug folder.
 
 ## References
-1. [EOWL Dataset](https://github.com/kloge/The-English-Open-Word-List/tree/master/EOWL%20LF%20Delimited%20Format)
+1. [EOWL Dataset](https://github.com/kloge/The-English-Open-Word-List/tree/master/EOWL%20LF%20Delimited%20Format) </p>
 2. [Edugator "9.6 B/B+ Trees" Lesson](https://edugator.app/courses/2eff7d57-3f4b-4297-ac6c-0bb5ce67348b/lesson/d54ad28e-5b7f-4cbd-91ae-87172912aa79) </p>
 3. [Open-DSA "17.6 B Trees"](https://opendsa-server.cs.vt.edu/OpenDSA/Books/Everything/html/BTree.html#id2) </p>
 4. Weiss "4.7 B-Trees" [Page 168 of Data Structures and Algorithm Analysis in C++, 4th Edition] </p>
@@ -69,6 +69,6 @@ To run this project, open CLion. Click File at the top, then click Open. Find th
 7. [C++ Timer](https://www.delftstack.com/howto/cpp/cpp-timer/)</p>
 8. [Edugator "8.3 Tries" Lesson](https://edugator.app/courses/2eff7d57-3f4b-4297-ac6c-0bb5ce67348b/lesson/280c65a3-4c2e-45d9-837b-74125bee8519)</p>
 
-
-UK Advanced Cryptics Dictionary Licensing Information:
+ </p>
+UK Advanced Cryptics Dictionary Licensing Information: </p>
 Copyright © J Ross Beresford 1993-1999. All Rights Reserved. The following restriction is placed on the use of this publication: if the UK Advanced Cryptics Dictionary is used in a software package or redistributed in any form, the copyright notice must be prominently displayed and the text of this document must be included verbatim.
