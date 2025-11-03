@@ -70,7 +70,7 @@ int main()
     }
 
     // prompt user for prefix input
-    std::cout << "Enter a (partial) lower-case word: ";
+    std::cout << "Enter a lower-case prefix query: ";
     std::string prefix;
     std::cin >> prefix;
     bool prefixExists = myTrie.contains(prefix);
