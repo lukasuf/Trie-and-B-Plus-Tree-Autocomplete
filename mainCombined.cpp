@@ -115,7 +115,7 @@ int main()
     // the main autocomplete loop runs until the user types 0
     while (true)
     {
-        cout << "Enter a (partial) lower-case word, 's' to save manually, or '0' to exit: ";
+        cout << "Enter a lower-case prefix query, 's' to save manually, or '0' to exit: ";
         string prefix;
         cin >> prefix;
 
@@ -125,6 +125,7 @@ int main()
             cout << "Enter the full word you would like to save: ";
             string customWord;
             cin >> customWord;
+            cout << endl;
             outFile << customWord << " ";
             cout << customWord << " saved manually." << endl << endl;
             continue;
