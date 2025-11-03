@@ -28,11 +28,16 @@ https://github.com/kloge/The-English-Open-Word-List/tree/master/EOWL%20LF%20Deli
 We will be using the English Open Word List (EOWL) data set, which is published by Ken Loge (@kloge on GitHub) and almost entirely derived from the “UK Advanced Cryptics Dictionary” (UKACD) Version 1.6, by J. Ross Beresford. The EOWL contains 128,985 English words. We will utilize the LF delimited format, where words are separated into 26 different text files according to the starting letter of the word. In each text file, the words are each on their own line. Then, we will utilize a regex filter to eliminate all words that do not entirely consist of lower-case alphabetical characters and/or do not have at least 3 letters, yielding a final total of 128,600 English words.
 
 ## Trie Complexity
-TBD
+The Trie in this project stores words one character at a time, where each node represents a single letter in a word. The main operations are inserting all words from the dataset, checking if a specific word exists, and finding autocomplete suggestions that begin with a given prefix.
+
+For insertion, the algorithm moves through the Trie one letter at a time. If a node for that letter doesn’t exist, it creates a new one. Once all letters in the word are processed, the final node is marked as the end of a valid word. Because this process touches one node per character, inserting a single word of length m takes O(m) time. When building the full dictionary of n words, the total time is O(n × m). The Trie’s height is determined by the longest word in the dataset, not the total number of words, which keeps insertions efficient even as the vocabulary grows.
+
+For searching and autocomplete, the algorithm first walks down the Trie following the prefix. This initial traversal takes O(m) time, where m is the number of characters in the prefix. Once it reaches the correct node, the helper function collectWords() explores all possible word endings below it. The time required for this step depends on how many valid completions exist. In the worst case, if the prefix is very common, like “a”, it may visit every word that starts with that letter, giving a complexity of about O(m + k), where k is the number of matching results.
+
+The space complexity of a Trie is proportional to the number of nodes, which in turn depends on the total number of unique character combinations across all words. In the worst case, where no words share prefixes, the space cost is O(n × m). However, because many words reuse the same initial letters (“read,” “ready,” “real”), much of the structure is shared, so the actual space used is usually much lower in practice.
 
 ## B+ Tree Complexity
 In the context of the underlying B+ tree implementation, the key operations are the insertion of a large set of words into the tree, searching for the node that contains the nearest complete word to the search query, and gathering the range of valid autocomplete options into a vector. The insertion occurs at startup after selecting the B+ tree implementation. Then, when a user inputs an initial (partial) word, searching and gathering occurs.
-
 In the case of insertion, several functions were implemented, including splitNode, insertIntoExisting, and the main insert function. The Big O time complexity for insertion is O(log(n)), where n is the total number of nodes in the tree. This is because a properly functioning B+ implementation should be balanced, thereby yielding log(n) height.
 
 For search, findAutoCompleteOptions and findNearestNode are used. findAutoCompleteOptions calls findNearestNode, a typical B+ tree search function, which has a Big O time complexity of O(log(n)), where n is the total number of nodes in the tree. Once it finds the nearest node, it iterates through the node’s key vector, which has a maximum of 1 less than the tree’s order keys (a constant), adding each valid key to a queue in constant time. If it reaches the end of the key vector and the last key was a valid autocomplete option, it will move to the next node in the linked list of the B+ tree leaf nodes in constant time as well. In the scenario that the initial search query is “a” and every word in the tree starts with a, all nodes of the tree would be added to the queue, yielding a worse case time complexity of O(n). Thus, after eliminating the lower order term, the worst case time complexity for search is O(n), where n is the total number of nodes in the tree.
@@ -41,10 +46,13 @@ Additionally, the class destructor and a level order key print function for debu
 
 Notice that, in this particular application with this data set, the number of nodes is 128,600 and the order 220. Also, since the words (nodes) have a wide distribution of starting letters, the worse-case gathering scenario is impossible. Also, the height of the tree would be 3, drastically reducing costs related to the height of the tree.
 
+## Complexity Comparison
+In testing, both data structures successfully supported autocomplete, but the Trie performed faster for both building and querying. Although the B+ Tree has a theoretical time complexity of O(log n) for searches, it compares entire strings at each step, while the Trie works one character at a time. Because the Trie’s performance depends on word length (m) instead of the total number of stored words (n), it handled this dataset of 128,000 words more efficiently.
+
+Overall, the Trie built its structure in less time and returned autocomplete results almost instantly, especially for short prefixes. The B+ Tree was still effective and provided accurate results, but the Trie consistently achieved lower build and query times in our experiments.
 
 ## Testing Instructions
-If testing B+ Tree implementation in CLion, keep the .cpp and .h files in the project folder. Then, place the data folder containing all of the "_ Words.txt" files in the cmake-build-debug folder.
-Then,...
+To run this project, open CLion. Click File at the top, then click Open. Find the folder where you saved or downloaded this project and open it. Make sure you see all the main files inside: BPT.cpp, BPT.h, Trie.cpp, Trie.h, mainTrie.cpp, mainBPT.cpp, and mainCombined.cpp. You should also have a folder called data that holds all the word files from A to Z. That data folder needs to be inside the cmake-build-debug folder so the program can read the words. Once the project is open, look at the top right of CLion for a box that says trie_demo, bpt_demo, or combined_demo. Pick which one you want to run, then click the green Run or Build button. The program will load all the words and ask you to type a partial word. Press t to see more word suggestions or e to choose one. If you run the combined version, you can also save words to a text file and compare how fast the Trie and B+ Tree versions work. Type 0 to exit the program when you’re done.
 
 ## References
 BPT References (Used in the research and understanding of B+ Trees)</p>
@@ -53,4 +61,6 @@ BPT References (Used in the research and understanding of B+ Trees)</p>
      3. Weiss "4.7 B-Trees" [Page 168 of Data Structures and Algorithm Analysis in C++, 4th Edition] </p>
      4. [B-Tree Wikipedia](https://en.wikipedia.org/wiki/B%2B_tree) </p>
      5. [B+ Tree Visualizer](https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html) </p>
+     6. [C++ Timer](https://www.delftstack.com/howto/cpp/cpp-timer/)</p>
+     7. [Edugator "8.3 Tries" Lesson](https://edugator.app/courses/2eff7d57-3f4b-4297-ac6c-0bb5ce67348b/lesson/280c65a3-4c2e-45d9-837b-74125bee8519)</p>
 
