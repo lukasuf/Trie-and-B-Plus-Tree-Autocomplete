@@ -27,3 +27,17 @@ add_custom_command(TARGET trie_demo POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/data
         $<TARGET_FILE_DIR:trie_demo>/data)
+
+# Combined autocomplete demo (Trie + B+ Tree)
+add_executable(complete_demo
+        mainCombined.cpp
+        Trie.cpp
+        BPT.cpp
+        mainCombined.cpp
+)
+
+# Copy the data folder for combined demo as well
+add_custom_command(TARGET complete_demo POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/data
+        $<TARGET_FILE_DIR:complete_demo>/data)
